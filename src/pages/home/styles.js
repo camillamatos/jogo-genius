@@ -22,18 +22,25 @@ export const Container = styled.div`
     margin: 10px 0;
   }
 
+  a {
+    margin-top: 50px;
+  }
+
 `;
 
 export const Button = styled.button`
   text-align: center;
   background-color: white;
-  border: 3px solid linear-gradient(90deg, rgba(12,31,230,1) 0%, rgba(65,237,41,0.989233193277311) 35%, rgba(233,8,156,1) 100%);
+  border: none;
   width: 300px;
   height: 80px;
   border-radius: 50px;
   font-size: 3rem;
-  margin-top: 50px;
   font-weight: bold;
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.3);
+  -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.3);
+  box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.3);
+  transition: 200ms all;
 
   &:hover{
     color: white;
