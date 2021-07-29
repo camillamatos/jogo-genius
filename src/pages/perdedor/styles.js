@@ -8,32 +8,21 @@ export const Container = styled.div`
   justify-content: center;
   padding: 0 30%;
   text-align: center;
-  background-image: url("./colors.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
+  background: rgb(12,31,230);
+  background: linear-gradient(90deg, rgba(12,31,230,1) 0%, rgba(65,237,41,0.989233193277311) 35%, rgba(233,8,156,1) 100%);
 
-  img {
-    height: 100vh;
-    position: absolute;
-    opacity: 0.7;
-    z-index:0;
-  }
   h1 {
     color: white;
     font-size: 10rem;
     margin-bottom: 50px;
-    z-index:1;
   }
 
   p {
     font-size: 3rem;
     margin: 10px 0;
-    font-weight: 500;
-    z-index:1;
   }
 
   a {
-    z-index:1;
     margin-top: 50px;
   }
 
@@ -54,8 +43,8 @@ export const Button = styled.button`
   transition: 200ms all;
 
   &:hover{
-    -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.7);
-  -moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.7);
-  box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.7);
-  }
+    color: white;
+    background: rgb(65,237,41);
+    background: linear-gradient(90deg, rgba(65,237,41,0.989233193277311) 13%, rgba(12,31,230,1) 70%, rgba(233,8,156,1) 93%);
+}
 `;

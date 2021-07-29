@@ -6,10 +6,11 @@ function Home() {
   return(
     <S.Container>
       <h1>Genius Game</h1>  
-      <p>Bem vindo ao Genius Game!!</p>
-      <p>A seguir serão mostradas algumas cores, que você deverá lembrar a ordem em que aparecem e apontar para elas com a sua mão.</p>
-      <p>Vamos começar?</p>
-      <Link to='seq1'><S.Button>COMEÇAR</S.Button></Link>
+      <p>Bem vindo ao jogo mais divertido de memória!!</p>
+      <p>Pra jogar é muito simples:</p>
+      <p>1 - clique em começar <br />2 - preste muita atenção nas cores <br />3 - passe a sua mão em cima da cor certa na ordem que você viu <br />4 - complete todas as fases até vencer!!</p>
+      <img src="pintura.png" alt="" />
+      <Link to='seq/1'><S.Button>COMEÇAR</S.Button></Link>
     </S.Container>
   )
 }

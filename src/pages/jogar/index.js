@@ -1,10 +1,30 @@
-import React, { useRef, useEffect, useCallback } from 'react';
+import React, { useRef, useEffect, useCallback, useState } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
+import { fase1, fase2, fase3 } from '../sequencias';
 import * as S from './styles';
 
 function Jogar() {
   const videoRef = useRef(null);
   const videoFlipRef = useRef(null);
   const mapaMovimentoRef = useRef(null);
+  const { fase } = useParams();
+  const [colors, setColors] = useState();
+  const selectedColors = []
+  const [index, setIndex] = useState(0);
+  const history = useHistory();
+
+  function verifySequence(){
+    if(fase === '3') return history.push('/voce-venceu')
+
+    return history.push(`/seq/${Number(fase) + 1}`)
+  }
+
+  function checkColor(){
+    if(colors[index] !== selectedColors[index]) return history.push('/voce-perdeu')
+
+    setIndex(index+1)
+    if(selectedColors.length ===  colors.length) return verifySequence()
+  }
 
   const getVideo = useCallback(async () => {
     try {
@@ -49,6 +69,20 @@ function Jogar() {
   }, [])
 
   useEffect(() => {
+    switch (fase) {
+      case '1':
+        setColors(fase1)
+        break;
+      case '2':
+        setColors(fase2)
+        break;
+      case '3':
+        setColors(fase3)
+        break;
+      default:
+        break;
+    }
+
     getVideo();
     setMapaMovimento();
   }, [getVideo, setMapaMovimento]);

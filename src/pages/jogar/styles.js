@@ -23,13 +23,13 @@ export const VideoContainer = styled.div`
   .vermelho {
     top: 0;
     left: 0;
-    background-color: red;
+    background-color: #f00;
   }
 
   .verde {
     top: 0;
     right: 0;
-    background-color: green;
+    background-color: #0f0;
   }
 
   .amarelo {
@@ -41,6 +41,6 @@ export const VideoContainer = styled.div`
   .azul {
     bottom: 0;
     right: 0;
-    background-color: cyan;
+    background-color: #00f;
   }
 `
