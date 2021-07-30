@@ -90,13 +90,15 @@ function Jogar() {
   return (
     <S.Container>
       <S.VideoContainer>
-        <video ref={videoRef} autoPlay width="640" height="480" />
-        <canvas ref={videoFlipRef} width="640" height="480" />
-        <canvas id="mapa-movimento" ref={mapaMovimentoRef} width="640" height="480" />
-        <div className="bloco vermelho" />
-        <div className="bloco verde" />
-        <div className="bloco azul" />
-        <div className="bloco amarelo" />
+        <video ref={videoRef} autoPlay width="1200" height="800" />
+        <canvas ref={videoFlipRef} width="1200" height="800"  />
+        <canvas id="mapa-movimento" ref={mapaMovimentoRef} width="1200" height="800"  />
+        <div className="blocos">
+          <div className="bloco vermelho" />
+          <div className="bloco verde" />
+          <div className="bloco azul" />
+          <div className="bloco amarelo" />
+       </div>
       </S.VideoContainer>
     </S.Container>
   )

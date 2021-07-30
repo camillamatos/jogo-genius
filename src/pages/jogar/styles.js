@@ -12,35 +12,32 @@ export const Container = styled.div`
 `;
 
 export const VideoContainer = styled.div`
-  position: relative;
-
   .bloco {
-    height: 100px;
-    width: 100px;
+    height: 120px;
+    width: 180px;
+  }
+
+  .blocos {
+    width: 1200px;
+    display: flex;
     position: absolute;
+    top: 0;
+    justify-content: space-between;
   }
 
   .vermelho {
-    top: 0;
-    left: 0;
     background-color: #f00;
   }
 
   .verde {
-    top: 0;
-    right: 0;
     background-color: #0f0;
   }
 
   .amarelo {
-    bottom: 0;
-    left: 0;
     background-color: yellow;
   }
 
   .azul {
-    bottom: 0;
-    right: 0;
     background-color: #00f;
   }
 `
