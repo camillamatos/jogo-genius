@@ -1,15 +1,14 @@
 import { Switch, Route } from 'react-router-dom';
 
-import { Home, Sequencia, Jogar, Vencedor, Perdedor } from './pages';
+import { Home, Sequencia, Jogar, Fim } from './pages';
 
 function Routes() {
   return(
     <Switch>
       <Route path='/' exact component={Home}  />
       <Route path='/seq/:fase' component={Sequencia}  />
-      <Route path='/jogar/:fase' component={Jogar}  />
-      <Route path='/voce-venceu' component={Vencedor}  />
-      <Route path='/voce-perdeu' component={Perdedor}  />
+      <Route path='/jogar' component={Jogar}  />
+      <Route path='/fim' component={Fim}  />
     </Switch>
   );
 }

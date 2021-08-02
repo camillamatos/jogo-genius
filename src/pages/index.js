@@ -1,5 +1,4 @@
 export * from './home'
 export * from './sequencia'
 export * from './jogar'
-export * from './vencedor'
-export * from './perdedor'
+export * from './fim'

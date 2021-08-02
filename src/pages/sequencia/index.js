@@ -31,7 +31,7 @@ function Sequencia() {
 
   if(index === colors?.length){
     clearInterval();
-    history.push(`/jogar/${fase}`)
+    history.push(`/jogar`, { sequence: colors})
   }
 
   return(

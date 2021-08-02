@@ -1,13 +1,9 @@
 import React, { useRef, useEffect, useCallback, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { fase1, fase2, fase3 } from '../sequencias';
 import * as S from './styles';
 
-function Jogar() {
-  // sequencia certa do jogo
-  const [colors, setColors] = useState([]);
-  const [index, setIndex] = useState(0);
-  const [selectedColors, setSelectedColors] = useState([]);
+function Jogar(props) {
+  const colors = props.location.state.sequence;
   const { fase } = useParams();
   const history = useHistory();
   const videoRef = useRef(null);
@@ -18,33 +14,19 @@ function Jogar() {
   const q3 = useRef(null);
   const q4 = useRef(null);
   let time = useRef(null);
-
-  const setCorrectColor = useCallback(() => {
-    switch (fase) {
-      case 1:
-        setColors(fase1)
-        break;
-      case 2:
-        setColors(fase2)
-        break;
-      case 3:
-        setColors(fase3)
-        break;
-      default:
-        break;
-    }
-  }, [fase])
+  let index = 0;
 
   const verifySequence = useCallback(() => {
-    if(fase === '3') return history.push('/voce-venceu')
+    if(fase === '3') return history.push('/fim', true)
     return history.push(`/seq/${Number(fase) + 1}`)
   }, [fase, history]);
 
-  const checkColor = useCallback(() => {
-    if(colors[index] !== selectedColors[index]) return history.push('/voce-perdeu')
-    setIndex(index => index + 1)
-    // if(selectedColors.length ===  colors.length) return verifySequence()
-  }, [colors, history, index, selectedColors])
+  const checkColor = useCallback((color) => {
+    if(colors[index] !== color) return history.push('/fim', false)
+    index++;
+
+    if(index >= 4) return verifySequence()
+  }, [colors, history, verifySequence])
 
   const getVideo = useCallback(async () => {
     try {
@@ -64,7 +46,7 @@ function Jogar() {
   const debounce = color => {
     clearTimeout(time);
     time = setTimeout(() => {
-      setSelectedColors(selected => [...selected, color]);
+      checkColor(color);
     }, 500);
   }
 
@@ -92,71 +74,64 @@ function Jogar() {
         }
         contextoMapaMovimento.putImageData(frame, 0, 0);
 
-        const x1 = q1.current.offsetLeft, y1 = q1.current.offsetTop, w1 = q1.current.offsetWidth, h1 = q1.current.offsetHeight;
-        // const x2 = q2.current.offsetLeft, y2 = q2.current.offsetTop, w2 = q2.current.offsetWidth, h2 = q2.current.offsetHeight;
-        // const x3 = q3.current.offsetLeft, y3 = q3.current.offsetTop, w3 = q3.current.offsetWidth, h3 = q3.current.offsetHeight;
-        // const x4 = q4.current.offsetLeft, y4 = q4.current.offsetTop, w4 = q4.current.offsetWidth, h4 = q4.current.offsetHeight;
+        const offset1 = [q1.current.offsetLeft, q1.current.offsetTop, q1.current.offsetWidth, q1.current.offsetHeight];
+        const offset2 = [q2.current.offsetLeft, q2.current.offsetTop, q2.current.offsetWidth, q2.current.offsetHeight];
+        const offset3 = [q3.current.offsetLeft, q3.current.offsetTop, q3.current.offsetWidth, q3.current.offsetHeight];
+        const offset4 = [q4.current.offsetLeft, q4.current.offsetTop, q4.current.offsetWidth, q4.current.offsetHeight];
 
-        const dadosImgMapa1 = contextoMapaMovimento.getImageData(x1,y1,w1,h1);
-        // const dadosImgMapa2 = contextoMapaMovimento.getImageData(x2,y2,w2,h2);
-        // const dadosImgMapa3 = contextoMapaMovimento.getImageData(x3,y3,w3,h3);
-        // const dadosImgMapa4 = contextoMapaMovimento.getImageData(x4,y4,w4,h4);
+        const dadosImgMapa1 = contextoMapaMovimento.getImageData(offset1[0], offset1[1], offset1[2], offset1[3]);
+        const dadosImgMapa2 = contextoMapaMovimento.getImageData(offset2[0], offset2[1], offset2[2], offset2[3]);
+        const dadosImgMapa3 = contextoMapaMovimento.getImageData(offset3[0], offset3[1], offset3[2], offset3[3]);
+        const dadosImgMapa4 = contextoMapaMovimento.getImageData(offset4[0], offset4[1], offset4[2], offset4[3]);
 
-        const quantidadeDePixels1 = (dadosImgMapa1.data.length / 4);
-        // const quantidadeDePixels2 = (dadosImgMapa2.data.length / 4);
-        // const quantidadeDePixels3 = (dadosImgMapa3.data.length / 4);
-        // const quantidadeDePixels4 = (dadosImgMapa4.data.length / 4);
+        const qntPixels = [(dadosImgMapa1.data.length / 4), (dadosImgMapa2.data.length / 4), (dadosImgMapa3.data.length / 4), (dadosImgMapa4.data.length / 4)];
 
-        let i1 = 0, i2 = 0, i3 = 0, i4 = 0;
-        let soma1 = 0, soma2 = 0, soma3 = 0, soma4 = 0;
+        let i = [0, 0, 0, 0];
+        let soma = [0, 0, 0, 0];
 
-        while (i1 < quantidadeDePixels1) {
-          soma1 += dadosImgMapa1.data[i1*4];
-          ++i1;
+        while (i[0] < qntPixels[0]) {
+          soma[0] += dadosImgMapa1.data[i[0]*4];
+          ++i[0];
         }
 
-        if (Math.round(soma1 / quantidadeDePixels1) > 10) {
-          // setSelectedColors(selected => [...selected, '#f00']);
+        while (i[1] < qntPixels[1]) {
+          soma[1] += dadosImgMapa2.data[i[1]*4];
+          ++i[1];
+        }
+
+        while (i[2] < qntPixels[2]) {
+          soma[2] += dadosImgMapa3.data[i[2]*4];
+          ++i[2];
+        }
+
+        while (i[3] < qntPixels[3]) {
+          soma[3] += dadosImgMapa4.data[i[3]*4];
+          ++i[3];
+        }
+
+        if (Math.round(soma[0] / qntPixels[0]) > 10) {
           debounce('#f00');
         }
 
-        // while (i2 < quantidadeDePixels2) {
-        //   soma2 += dadosImgMapa2.data[i2*4];
-        //   ++i2;
-        // }
+        if (Math.round(soma[1] / qntPixels[1]) > 10) {
+          debounce('#0f0');
+        }
 
-        // if (Math.round(soma2 / quantidadeDePixels2) > 10) {
-        //   setSelectedColors(selected => [...selected, '#0f0']);
-        // }
+        if (Math.round(soma[2] / qntPixels[2]) > 10) {
+          debounce('#00f');
+        }
 
-        // while (i3 < quantidadeDePixels3) {
-        //   soma3 += dadosImgMapa3.data[i3*4];
-        //   ++i3;
-        // }
-
-        // if (Math.round(soma3 / quantidadeDePixels3) > 10) {
-        //   setSelectedColors(selected => [...selected, '#ff0'])
-        // }
-
-        // while (i4 < quantidadeDePixels4) {
-        //   soma4 += dadosImgMapa4.data[i4*4];
-        //   ++i4;
-        // }
-
-        // if (Math.round(soma4 / quantidadeDePixels4) > 10) {
-        //   setSelectedColors(selected => [...selected, '#00f'])
-        // }
-
-        // checkColor();
+        if (Math.round(soma[3] / qntPixels[3]) > 10) {
+          debounce('#ff0');
+        }
       }, 1000 / 60)
     }
   }, [])
 
   useEffect(() => {
-    setCorrectColor();
     getVideo();
     setMapaMovimento();
-  }, [getVideo, setMapaMovimento, setCorrectColor]);
+  }, [getVideo, setMapaMovimento]);
 
   return (
     <S.Container>

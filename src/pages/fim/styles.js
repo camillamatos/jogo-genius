@@ -31,7 +31,7 @@ export const Container = styled.div`
 `;
 
 export const Button = styled.button`
-  text-align: center;
+ text-align: center;
   background-color: white;
   border: none;
   width: 300px;
@@ -45,8 +45,8 @@ export const Button = styled.button`
   transition: 200ms all;
 
   &:hover{
-    color: white;
-    background: rgb(65,237,41);
-    background: linear-gradient(90deg, rgba(65,237,41,0.989233193277311) 13%, rgba(12,31,230,1) 70%, rgba(233,8,156,1) 93%);
-}
+    -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.7);
+  -moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.7);
+  box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.7);
+  }
 `;
