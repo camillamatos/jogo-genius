@@ -31,13 +31,20 @@ function Sequencia() {
 
   if(index === colors?.length){
     clearInterval();
-    history.push(`/jogar`, { sequence: colors})
+    history.push(`/jogar/${fase}`, { sequence: colors})
   }
 
   return(
     <S.Container>
       <h1>Preste atenção nas cores!</h1>  
-      {colors && <S.Color color={colors[index]} />}
+      {colors && (
+        <div className='blocks'>
+          <S.Color color="#f00" atual={colors[index]}/>
+          <S.Color color="#ff0" atual={colors[index]}/>
+          <S.Color color="#0f0" atual={colors[index]}/>
+          <S.Color color="#00f" atual={colors[index]}/>
+        </div>
+      )}
     </S.Container>
   )
 }

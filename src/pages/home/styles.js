@@ -23,6 +23,8 @@ export const Container = styled.div`
     font-size: 10rem;
     margin-bottom: 50px;
     z-index:1;
+    font-weight: 100;
+    font-family: 'Permanent Marker', cursive;
   }
 
   p {
@@ -30,6 +32,7 @@ export const Container = styled.div`
     margin: 10px 0;
     font-weight: 500;
     z-index:1;
+    background-color: rgba(243, 157, 18, 0.7);
   }
 
   a {
@@ -47,7 +50,8 @@ export const Button = styled.button`
   height: 80px;
   border-radius: 50px;
   font-size: 3rem;
-  font-weight: bold;
+  font-family: 'Permanent Marker', cursive;
+  font-weight: 100;
   -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.3);
   -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.3);
   box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.3);

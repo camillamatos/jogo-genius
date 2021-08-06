@@ -14,18 +14,27 @@ function Jogar(props) {
   const q3 = useRef(null);
   const q4 = useRef(null);
   let time = useRef(null);
+  let movement = useRef(null);
   let index = 0;
 
+  console.log(colors)
+
   const verifySequence = useCallback(() => {
+    clearInterval(movement);
     if(fase === '3') return history.push('/fim', true)
+    
     return history.push(`/seq/${Number(fase) + 1}`)
   }, [fase, history]);
 
   const checkColor = useCallback((color) => {
-    if(colors[index] !== color) return history.push('/fim', false)
+    if(colors[index] !== color){
+      clearInterval(movement);
+      return history.push('/fim', false);
+    } 
+
     index++;
 
-    if(index >= 4) return verifySequence()
+    if(index >= colors.length) return verifySequence()
   }, [colors, history, verifySequence])
 
   const getVideo = useCallback(async () => {
@@ -58,7 +67,8 @@ function Jogar(props) {
       contextoVideoFlip.translate(videoFlipRef.current.width, 0);
       contextoVideoFlip.scale(-1, 1);
 
-      setInterval(() => {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      movement = setInterval(() => {
         contextoVideoFlip.drawImage(videoRef.current, 0, 0, videoRef.current.width, videoRef.current.height);
         const image = contextoVideoFlip.getImageData(0, 0, videoFlipRef.current.width, videoFlipRef.current.height);
         contextoVideoFlip.drawImage(videoRef.current, 0, 0, videoRef.current.width, videoRef.current.height);

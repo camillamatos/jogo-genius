@@ -16,6 +16,8 @@ export const Container = styled.div`
     color: white;
     font-size: 10rem;
     margin-bottom: 50px;
+    font-family: 'Permanent Marker', cursive;
+    font-weight: 100;
   }
 
   p {
@@ -34,11 +36,12 @@ export const Button = styled.button`
  text-align: center;
   background-color: white;
   border: none;
-  width: 300px;
+  padding: 10px 30px;
   height: 80px;
   border-radius: 50px;
   font-size: 3rem;
-  font-weight: bold;
+  font-family: 'Permanent Marker', cursive;
+  font-weight: 100;
   -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.3);
   -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.3);
   box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.3);
