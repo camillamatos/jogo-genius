@@ -1,9 +1,12 @@
 import React, { useRef, useEffect, useCallback, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import { useSounds } from '../../hooks/sounds'
 import * as S from './styles';
 
 function Jogar(props) {
   const colors = props.location.state.sequence;
+  const [index, setIndex] = useState(0);
+  const [ready, setReady] = useState(false);
   const { fase } = useParams();
   const history = useHistory();
   const videoRef = useRef(null);
@@ -14,13 +17,9 @@ function Jogar(props) {
   const q3 = useRef(null);
   const q4 = useRef(null);
   let time = useRef(null);
-  let movement = useRef(null);
-  let index = 0;
-
-  console.log(colors)
+  const { emitSound } = useSounds();
 
   const verifySequence = useCallback(() => {
-    clearInterval(movement);
     if(fase === '3') return history.push('/fim', true)
     
     return history.push(`/seq/${Number(fase) + 1}`)
@@ -28,14 +27,14 @@ function Jogar(props) {
 
   const checkColor = useCallback((color) => {
     if(colors[index] !== color){
-      clearInterval(movement);
       return history.push('/fim', false);
     } 
 
-    index++;
+    const newIndex = index + 1;
+    setIndex(newIndex);
 
-    if(index >= colors.length) return verifySequence()
-  }, [colors, history, verifySequence])
+    if(newIndex >= colors.length) return verifySequence()
+  }, [colors, history, verifySequence, index]);
 
   const getVideo = useCallback(async () => {
     try {
@@ -52,23 +51,31 @@ function Jogar(props) {
     }
   }, []);
 
-  const debounce = color => {
-    clearTimeout(time);
-    time = setTimeout(() => {
+  const debounce = useCallback(color => {
+    clearTimeout(time.current);
+    time.current = setTimeout(() => {
+      emitSound(color);
       checkColor(color);
     }, 500);
-  }
+  }, [time, checkColor, emitSound]);
 
-  const setMapaMovimento = useCallback(async () => {
+  useEffect(() => {
+    getVideo();
+
+    let interval = null;
+
     if (videoFlipRef.current && mapaMovimentoRef.current && videoRef.current && q1.current && q2.current && q3.current && q4.current) {
       const contextoVideoFlip = videoFlipRef.current.getContext('2d');
       const contextoMapaMovimento = mapaMovimentoRef.current.getContext('2d');
 
-      contextoVideoFlip.translate(videoFlipRef.current.width, 0);
-      contextoVideoFlip.scale(-1, 1);
+      if (!ready) {
+        contextoVideoFlip.translate(videoFlipRef.current.width, 0);
+        contextoVideoFlip.scale(-1, 1);
+        setReady(true);
+      }
 
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      movement = setInterval(() => {
+      interval = setInterval(() => {
+        if (!videoRef.current || !ready) return;
         contextoVideoFlip.drawImage(videoRef.current, 0, 0, videoRef.current.width, videoRef.current.height);
         const image = contextoVideoFlip.getImageData(0, 0, videoFlipRef.current.width, videoFlipRef.current.height);
         contextoVideoFlip.drawImage(videoRef.current, 0, 0, videoRef.current.width, videoRef.current.height);
@@ -136,12 +143,9 @@ function Jogar(props) {
         }
       }, 1000 / 60)
     }
-  }, [])
 
-  useEffect(() => {
-    getVideo();
-    setMapaMovimento();
-  }, [getVideo, setMapaMovimento]);
+    return () => clearInterval(interval);
+  }, [getVideo, debounce, ready]);
 
   return (
     <S.Container>

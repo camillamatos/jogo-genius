@@ -17,10 +17,16 @@ export const Container = styled.div`
     font-size: 5rem;
     margin: 70px 0;
   }
+
+  p {
+    font-size: 4rem;
+  }
 `;
+
 export const Color = styled.div`
   background-color: ${props => props.color};
-  opacity: ${props => props.color == props.atual ? '1' : '0.6' };
+  opacity: ${props => props.color === props.atual ? '1' : '0.2' };
   height: 400px;
   width: 20vw;
+  transition: 150ms all;
 `;

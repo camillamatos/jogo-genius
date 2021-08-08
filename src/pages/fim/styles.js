@@ -33,7 +33,8 @@ export const Container = styled.div`
 `;
 
 export const Button = styled.button`
- text-align: center;
+  width: 375px;
+  text-align: center;
   background-color: white;
   border: none;
   padding: 10px 30px;

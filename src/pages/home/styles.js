@@ -33,13 +33,14 @@ export const Container = styled.div`
     font-weight: 500;
     z-index:1;
     background-color: rgba(243, 157, 18, 0.7);
+    padding: 5px 15px;
+    border-radius: 2px;
   }
 
   a {
     z-index:1;
     margin-top: 50px;
   }
-
 `;
 
 export const Button = styled.button`
@@ -59,7 +60,7 @@ export const Button = styled.button`
 
   &:hover{
     -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.7);
-  -moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.7);
-  box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.7);
+    -moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.7);
+    box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.7);
   }
 `;
