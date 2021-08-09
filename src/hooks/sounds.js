@@ -4,12 +4,14 @@ import somamarelo from '../utils/sons/amarelo.mp3';
 import somazul from '../utils/sons/azul.mp3';
 import somverde from '../utils/sons/verde.mp3';
 import somvermelho from '../utils/sons/vermelho.mp3';
+import somerro from '../utils/sons/erro.mp3';
 
 export const useSounds = () => {
   const [amarelo] = useSound(somamarelo);
   const [azul] = useSound(somazul);
   const [verde] = useSound(somverde);
   const [vermelho] = useSound(somvermelho);
+  const [erro] = useSound(somerro);
 
   const emitSound = useCallback(color => {
     switch (color) {
@@ -25,10 +27,13 @@ export const useSounds = () => {
       case '#00f':
         azul();
         return;
+      case 'erro':
+        erro();
+        return;
       default:
         return;
     }
-  }, [vermelho, amarelo, verde, azul]);
+  }, [vermelho, amarelo, verde, azul, erro]);
 
   return { emitSound };
 };

@@ -1,11 +1,9 @@
 import React, { useEffect, useState, useCallback }  from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useSounds } from '../../hooks/sounds'
+import { getSequence } from '../../utils/colors';
 import { sleep } from '../../utils/sleep'
-import { fase1, fase2, fase3 } from '../sequencias';
 import * as S from './styles';
-
-const fases = [fase1, fase2, fase3];
 
 function Sequencia() {
   const { fase } = useParams();
@@ -13,6 +11,7 @@ function Sequencia() {
   const [index, setIndex] = useState(0);
   const [colors, setColors] = useState([]);
   const [ready, setReady] = useState(false);
+  const seq = getSequence(Number(fase) + 3);
   const {
     emitSound
   } = useSounds();
@@ -23,8 +22,8 @@ function Sequencia() {
       history.push('/');
       return;
     }
-    setColors(fases[index]);
-  }, [history]);
+    setColors(seq);
+  }, [history, seq]);
 
   useEffect(() => {
     if (ready) {

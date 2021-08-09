@@ -27,14 +27,16 @@ function Jogar(props) {
 
   const checkColor = useCallback((color) => {
     if(colors[index] !== color){
+      emitSound('erro');
       return history.push('/fim', false);
     } 
 
+    emitSound(color);
     const newIndex = index + 1;
     setIndex(newIndex);
 
     if(newIndex >= colors.length) return verifySequence()
-  }, [colors, history, verifySequence, index]);
+  }, [colors, history, verifySequence, index, emitSound]);
 
   const getVideo = useCallback(async () => {
     try {
@@ -54,10 +56,9 @@ function Jogar(props) {
   const debounce = useCallback(color => {
     clearTimeout(time.current);
     time.current = setTimeout(() => {
-      emitSound(color);
       checkColor(color);
     }, 500);
-  }, [time, checkColor, emitSound]);
+  }, [time, checkColor]);
 
   useEffect(() => {
     getVideo();
