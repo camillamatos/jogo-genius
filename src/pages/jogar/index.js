@@ -26,8 +26,6 @@ function Jogar() {
   }, [fase, history, colors]);
 
   const checkColor = useCallback((color) => {
-    console.log(color)
-    if(color){
       if(colors[index] !== color){
         emitSound('erro');
         return history.push('/fim', false);
@@ -38,7 +36,6 @@ function Jogar() {
       setIndex(newIndex);
   
       if(newIndex >= colors.length) return verifySequence()
-    }
   }, [colors, verifySequence, index, history, emitSound]);
 
   const getVideo = useCallback(async () => {
@@ -58,6 +55,7 @@ function Jogar() {
 
   const debounce = useCallback(color => {
     clearTimeout(time.current);
+    console.log(color)
     time.current = setTimeout(() => {
       checkColor(color);
     }, 500);
