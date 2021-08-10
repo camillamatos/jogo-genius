@@ -13,6 +13,6 @@ export const generateColors = count => {
   return array;
 };
 
-export const getSequence = (cont) => {
-  return generateColors(cont);
+export const getSequence = (base = []) => {
+  return !base.length ? generateColors(4) : [...base, ...generateColors(1)];
 };
