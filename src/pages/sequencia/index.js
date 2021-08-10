@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback }  from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams, useLocation } from 'react-router-dom';
 import { useSounds } from '../../hooks/sounds'
 import { getSequence } from '../../utils/colors';
 import { sleep } from '../../utils/sleep'
@@ -7,6 +7,8 @@ import * as S from './styles';
 
 function Sequencia() {
   const { fase } = useParams();
+  const location = useLocation();
+  const sequence = location.state?.sequence;
   const history = useHistory();
   const [index, setIndex] = useState(0);
   const [colors, setColors] = useState([]);
@@ -32,7 +34,7 @@ function Sequencia() {
   useEffect(() => {
     const start = async () => {
       await sleep(1);
-      const newSequence = getSequence(Number(fase) + 3);
+      const newSequence = getSequence(sequence);
 
       setReady(true);
       setFase(newSequence);
@@ -44,7 +46,7 @@ function Sequencia() {
       history.push(`/jogar/${fase}`, { sequence: newSequence });
     };
     start();
-  }, [setFase, fase, history]);
+  }, [setFase, fase, history, sequence]);
 
   return(
     <S.Container>
