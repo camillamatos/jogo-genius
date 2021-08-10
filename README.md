@@ -3,6 +3,6 @@
 
 Para rodar o projeto:
 
-Execute o comando ```yarn``` para instalar as dependências
+Execute o comando ```yarn``` ou ```npm i``` para instalar as dependências
 
-Execute o comando ```yarn``` start para rodar a aplicação
+Execute o comando ```yarn/npm start``` para rodar a aplicação

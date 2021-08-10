@@ -1,10 +1,10 @@
 import React, { useRef, useEffect, useCallback, useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { useSounds } from '../../hooks/sounds'
 import * as S from './styles';
 
-function Jogar(props) {
-  const colors = props.location.state.sequence;
+function Jogar() {
+  const colors = useLocation().state.sequence;
   const [index, setIndex] = useState(0);
   const [ready, setReady] = useState(false);
   const { fase } = useParams();
@@ -22,8 +22,8 @@ function Jogar(props) {
   const verifySequence = useCallback(() => {
     if(fase === '3') return history.push('/fim', true)
     
-    return history.push(`/seq/${Number(fase) + 1}`)
-  }, [fase, history]);
+    return history.push(`/seq/${Number(fase) + 1}`, { sequence: colors })
+  }, [fase, history, colors]);
 
   const checkColor = useCallback((color) => {
     if(colors[index] !== color){
