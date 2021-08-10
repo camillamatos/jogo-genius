@@ -36,7 +36,7 @@ function Jogar() {
     setIndex(newIndex);
 
     if(newIndex >= colors.length) return verifySequence()
-  }, [colors, history, verifySequence, index, emitSound]);
+  }, [colors, verifySequence, index, emitSound]);
 
   const getVideo = useCallback(async () => {
     try {
